@@ -3,36 +3,32 @@ package ru.job4j.dreamjob.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Post {
+public class Vacancy {
     private int id;
-    private String name;
+    private String title;
     private String description;
-    private LocalDateTime created;
+    private LocalDateTime creationDate;
 
-    public Post() {
-    }
-
-    public Post(int id, String name, String description, LocalDateTime created) {
+    public Vacancy(int id, String title, String description, LocalDateTime creationDate) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
-        this.created = created;
+        this.creationDate = creationDate;
     }
 
-    public int getId() {
-        return id;
+    public Vacancy() {
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -43,12 +39,12 @@ public class Post {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override
@@ -59,12 +55,18 @@ public class Post {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Post post = (Post) o;
-        return id == post.id;
+        Vacancy Vacancy = (Vacancy) o;
+        return id == Vacancy.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public int getId() {
+        return id;
+    }
+
+
 }
