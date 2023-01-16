@@ -3,24 +3,22 @@ package ru.job4j.dreamjob.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.job4j.dreamjob.model.Candidate;
-import ru.job4j.dreamjob.store.CandidateStore;
-
-import java.time.LocalDateTime;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.job4j.dreamjob.repository.MemoryCandidateRepository;
 
 @Controller
+@RequestMapping("/candidates")
 public class CandidateController {
-    private final CandidateStore candidateStore = CandidateStore.instOf();
+    private final MemoryCandidateRepository candidateRepository = MemoryCandidateRepository.getInstance();
 
-    @GetMapping("/candidates")
-    public String candidates(Model model) {
-        model.addAttribute("candidates", candidateStore.findAll());
-        return "candidates";
+    @GetMapping
+    public String getAll(Model model) {
+        model.addAttribute("candidates", candidateRepository.findAll());
+        return "candidates/list";
     }
 
-    @GetMapping("/formAddCandidate")
-    public String addCandidate(Model model) {
-        model.addAttribute("candidate", new Candidate(0, "Заполните название", "Заполните описание", LocalDateTime.now()));
-        return "addCandidate";
+    @GetMapping("/create")
+    public String getCreationPage() {
+        return "candidates/create";
     }
 }
