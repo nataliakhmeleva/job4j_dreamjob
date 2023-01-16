@@ -19,6 +19,10 @@ public class Vacancy {
     public Vacancy() {
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -55,18 +59,12 @@ public class Vacancy {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Vacancy Vacancy = (Vacancy) o;
-        return id == Vacancy.id;
+        Vacancy vacancy = (Vacancy) o;
+        return id == vacancy.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
-
-    public int getId() {
-        return id;
-    }
-
-
 }

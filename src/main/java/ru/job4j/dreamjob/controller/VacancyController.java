@@ -31,4 +31,5 @@ public class VacancyController {
         vacancyRepository.save(vacancy);
         return "redirect:/vacancies";
     }
+
 }
