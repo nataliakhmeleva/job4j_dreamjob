@@ -17,12 +17,12 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
     private MemoryCandidateRepository() {
-        candidates.put(1, new Candidate(1, "Ivanov Nikolay", "No  experience", LocalDateTime.now()));
-        candidates.put(2, new Candidate(2, "Shishkin Nikita", "Experience 1-2 years", LocalDateTime.now()));
-        candidates.put(3, new Candidate(3, "Platonov Andrew", "Experience 2-3 years", LocalDateTime.now()));
-        candidates.put(4, new Candidate(1, "Orlova Maria", "Experience 3-4 years", LocalDateTime.now()));
-        candidates.put(5, new Candidate(2, "Letova Irina", "Experience 5-6 years", LocalDateTime.now()));
-        candidates.put(6, new Candidate(3, "Vlasov Igor", "Experience 6+ years", LocalDateTime.now()));
+        save(new Candidate(0, "Ivanov Nikolay", "No  experience", LocalDateTime.now()));
+        save(new Candidate(0, "Shishkin Nikita", "Experience 1-2 years", LocalDateTime.now()));
+        save(new Candidate(0, "Platonov Andrew", "Experience 2-3 years", LocalDateTime.now()));
+        save(new Candidate(0, "Orlova Maria", "Experience 3-4 years", LocalDateTime.now()));
+        save(new Candidate(0, "Letova Irina", "Experience 5-6 years", LocalDateTime.now()));
+        save(new Candidate(0, "Vlasov Igor", "Experience 6+ years", LocalDateTime.now()));
     }
 
     public static MemoryCandidateRepository getInstance() {
@@ -31,22 +31,25 @@ public class MemoryCandidateRepository implements CandidateRepository {
 
     @Override
     public Candidate save(Candidate candidate) {
-        return null;
+        candidate.setId(nextId++);
+        candidates.put(candidate.getId(), candidate);
+        return candidate;
     }
 
     @Override
     public boolean deleteById(int id) {
-        return false;
+        return candidates.remove(id) != null;
     }
 
     @Override
     public boolean update(Candidate candidate) {
-        return false;
+        return candidates.computeIfPresent(candidate.getId(), (id, oldСandidate) -> new Candidate(oldСandidate.getId(),
+                candidate.getTitle(), candidate.getDescription(), candidate.getCreationDate())) != null;
     }
 
     @Override
     public Optional<Candidate> findById(int id) {
-        return Optional.empty();
+        return Optional.ofNullable(candidates.get(id));
     }
 
     public Collection<Candidate> findAll() {
