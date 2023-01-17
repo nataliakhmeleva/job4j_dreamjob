@@ -5,16 +5,14 @@ import ru.job4j.dreamjob.model.Candidate;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class MemoryCandidateRepository implements CandidateRepository {
-    private static final MemoryCandidateRepository INSTANCE = new MemoryCandidateRepository();
-
     private int nextId = 1;
-    private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final Map<Integer, Candidate> candidates = new HashMap<>();
 
     private MemoryCandidateRepository() {
         save(new Candidate(0, "Ivanov Nikolay", "No  experience", LocalDateTime.now()));
@@ -23,10 +21,6 @@ public class MemoryCandidateRepository implements CandidateRepository {
         save(new Candidate(0, "Orlova Maria", "Experience 3-4 years", LocalDateTime.now()));
         save(new Candidate(0, "Letova Irina", "Experience 5-6 years", LocalDateTime.now()));
         save(new Candidate(0, "Vlasov Igor", "Experience 6+ years", LocalDateTime.now()));
-    }
-
-    public static MemoryCandidateRepository getInstance() {
-        return INSTANCE;
     }
 
     @Override
