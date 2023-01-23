@@ -63,4 +63,15 @@ public class Sql2oUserRepository implements UserRepository {
             return query.executeAndFetch(User.class);
         }
     }
+
+    @Override
+    public Optional<User> findById(int id) {
+        try (var connection = sql2o.open()) {
+            var query = connection.createQuery("SELECT * FROM users WHERE id = :id");
+            query.addParameter("id", id);
+            var user = query.executeAndFetchFirst(User.class);
+            return Optional.ofNullable(user);
+        }
+    }
+
 }

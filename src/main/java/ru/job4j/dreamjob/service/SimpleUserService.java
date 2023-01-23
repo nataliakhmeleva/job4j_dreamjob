@@ -36,4 +36,9 @@ public class SimpleUserService implements UserService {
     public Collection<User> findAll() {
         return userRepository.findAll();
     }
+
+    @Override
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
+    }
 }
