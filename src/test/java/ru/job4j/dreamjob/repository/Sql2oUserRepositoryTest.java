@@ -43,6 +43,7 @@ class Sql2oUserRepositoryTest {
     void whenSave() {
         User user = new User(1, "1@ya.ru", "Ivan", "meow123");
         var expected = sql2oUserRepository.save(user);
+        assertThat(expected).isPresent();
         var savedUser = sql2oUserRepository.findById(user.getId());
         assertThat(savedUser).usingRecursiveComparison().isEqualTo(expected);
     }
@@ -56,6 +57,7 @@ class Sql2oUserRepositoryTest {
     void whenFindByEmailAndPassword() {
         User user = new User(1, "1@ya.ru", "Ivan", "meow123");
         var expected = sql2oUserRepository.save(user);
+        assertThat(expected).isPresent();
         var savedUser = sql2oUserRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         assertThat(savedUser).usingRecursiveComparison().isEqualTo(expected);
     }
@@ -65,7 +67,8 @@ class Sql2oUserRepositoryTest {
     void whenSaveOnlyTheFirstUniqueEmail() {
         User user = new User(1, "1@ya.ru", "Ivan", "meow123");
         User anotherUser = new User(2, "1@ya.ru", "Stepan", "321go");
-        sql2oUserRepository.save(user);
+        var expected = sql2oUserRepository.save(user);
+        assertThat(expected).isPresent();
         assertThat(sql2oUserRepository.save(anotherUser)).isEmpty();
     }
 
