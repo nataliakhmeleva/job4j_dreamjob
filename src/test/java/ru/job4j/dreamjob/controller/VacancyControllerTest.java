@@ -142,15 +142,20 @@ public class VacancyControllerTest {
 
     @Test
     public void whenDeleteVacancyThenRedirectToVacanciesPage() {
-        new Vacancy(1, "test1", "desc1", now(), true, 1, 2);
+        var vacancy1 = new Vacancy(1, "test1", "desc1", now(), true, 1, 2);
+        var vacancy2 = new Vacancy(2, "test2", "desc2", now(), false, 3, 4);
+        var listVacanciesBefore = List.of(vacancy1, vacancy2);
+        var listVacanciesAfter = List.of(vacancy2);
+        when(vacancyService.findAll()).thenReturn(listVacanciesBefore);
         when(vacancyService.deleteById(1)).thenReturn(true);
+        when(vacancyService.findAll()).thenReturn(listVacanciesAfter);
 
         var model = new ConcurrentModel();
         var view = vacancyController.delete(model, 1);
+        vacancyController.getAll(model);
         var actualVacancies = model.getAttribute("vacancies");
 
         assertThat(view).isEqualTo("redirect:/vacancies");
-        assertThat(actualVacancies).isNull();
-
+        assertThat(actualVacancies).isEqualTo(listVacanciesAfter);
     }
 }
